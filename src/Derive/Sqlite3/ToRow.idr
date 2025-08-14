@@ -35,7 +35,7 @@ appList = foldr acc `(Data.List.Quantifiers.All.Nil)
 x : Name
 x = "x"
 
-matchEither : String -> (res : TTImp) -> String -> TTImp
+matchEither : String -> (res : TTImp) -> Name -> TTImp
 matchEither x res y =
   `(case fromCell ~(varStr x) of
      Right ~(bindVar y) => ~(res)
@@ -45,7 +45,7 @@ parameters (nms : List Name)
 
   toRowClause : Con n vs -> Clause
   toRowClause =
-    accumArgs regular id appList (\(BA _ [x] _) => `(toRow ~(varStr x)))
+    accumArgs regular id appList (\(BA _ [x] _) => `(toRow ~(var x)))
 
   to : Con n vs -> TTImp
   to c =
