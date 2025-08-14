@@ -37,9 +37,9 @@ fromRowImplClaim impl p = implClaim impl (implType "FromRow" p)
 x : Name
 x = "x"
 
-matchEither : String -> (res : TTImp) -> String -> TTImp
+matchEither : Name -> (res : TTImp) -> Name -> TTImp
 matchEither x res y =
-  `(case fromRow ~(varStr x) of
+  `(case fromRow ~(var x) of
      Right ~(bindVar y) => ~(res)
      Left e             => Left e)
 
@@ -60,7 +60,7 @@ parameters (nms : List Name)
     let xs      := freshNames "x" c.arty
         ys      := freshNames "y" c.arty
         args    := boundArgs regular c.args [xs,ys]
-        applied := appAll c.name (map (\(BA _ [_,y] _) => varStr y) args <>> [])
+        applied := appAll c.name (map (\(BA _ [_,y] _) => var y) args <>> [])
      in patClause (fromLHS args) (fromRHS args $ app `(Right) applied)
 
   from : TTImp -> Con n vs -> TTImp
